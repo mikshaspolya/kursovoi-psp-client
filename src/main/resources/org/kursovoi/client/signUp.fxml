@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #f5cc5a;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursovoi.client.SignUpController">
+    <children>
+        <AnchorPane layoutY="89.0" prefHeight="314.0" prefWidth="700.0" style="-fx-background-color: #fefefe;">
+            <children>
+                <Separator layoutX="-1.0" layoutY="-1.0" prefHeight="9.0" prefWidth="702.0" style="-fx-background-color: #2e2528;" />
+                <TextField fx:id="nameField" layoutX="74.0" layoutY="28.0" prefHeight="38.0" prefWidth="234.0" promptText="Имя" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </TextField>
+                <TextField fx:id="surnameField" layoutX="74.0" layoutY="82.0" prefHeight="38.0" prefWidth="234.0" promptText="Фамилия" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </TextField>
+                <TextField fx:id="phoneField" layoutX="74.0" layoutY="137.0" prefHeight="38.0" prefWidth="234.0" promptText="Номер телефона" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </TextField>
+                <DatePicker fx:id="dateField" layoutX="74.0" layoutY="191.0" prefHeight="39.0" prefWidth="234.0" promptText="Дата рождения" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </DatePicker>
+                <TextField fx:id="emailField" layoutX="375.0" layoutY="28.0" prefHeight="38.0" prefWidth="234.0" promptText="Почта" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </TextField>
+                <TextField fx:id="loginField" layoutX="375.0" layoutY="82.0" prefHeight="38.0" prefWidth="234.0" promptText="Логин" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </TextField>
+                <PasswordField fx:id="passwordField" layoutX="375.0" layoutY="136.0" prefHeight="38.0" prefWidth="234.0" promptText="Пароль" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </PasswordField>
+                <PasswordField fx:id="repeatPasswordField" layoutX="375.0" layoutY="191.0" prefHeight="38.0" prefWidth="234.0" promptText="Повторите пароль" style="-fx-background-color: #fefefe; -fx-border-color: #868d99;">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </PasswordField>
+                <Button fx:id="signUpButton" layoutX="388.0" layoutY="254.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="207.0" style="-fx-background-color: WHITE;" text="Зарегистрироваться" textFill="#2e2528">
+                    <font>
+                        <Font name="MS Outlook" size="19.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="backButton" layoutX="87.0" layoutY="254.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="207.0" style="-fx-background-color: WHITE;" text="Назад" textFill="#2e2528" onAction="#back">
+                    <font>
+                        <Font name="MS Outlook" size="19.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </children>
+        </AnchorPane>
+        <Label layoutX="270.0" layoutY="33.0" text="Регистрация" textFill="#2e2528">
+            <font>
+                <Font name="Playbill" size="28.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

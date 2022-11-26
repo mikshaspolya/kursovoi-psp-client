@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #575965;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursovoi.client.admin.ShowDepositOrderController">
+   <children>
+      <AnchorPane layoutY="54.0" prefHeight="346.0" prefWidth="700.0" style="-fx-background-color: #fefefe;">
+         <children>
+            <Button fx:id="rejectButton" layoutX="370.0" layoutY="294.0" mnemonicParsing="false" onAction="#rejectButtonClicked" style="-fx-background-color: #fefefe;" text="Отклонить заявку">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="confirmButton" layoutX="197.0" layoutY="294.0" mnemonicParsing="false" onAction="#confirmButtonClicked" style="-fx-background-color: #fefefe;" text="Принять заявку">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <VBox layoutX="205.0" layoutY="65.0" prefHeight="216.0" prefWidth="120.0">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="133.0" text="ФИО:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="32.0" prefWidth="130.0" text="Ставка:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="33.0" prefWidth="134.0" text="Дата открытия:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="33.0" prefWidth="141.0" text="Дата закрытия:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="31.0" prefWidth="128.0" text="Валюта:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="32.0" prefWidth="129.0" text="Сумма:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="32.0" prefWidth="135.0" text="Статус:">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox layoutX="334.0" layoutY="65.0" prefHeight="216.0" prefWidth="174.0">
+               <children>
+                  <Label fx:id="fioLabel" prefHeight="34.0" prefWidth="194.0" text="1">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="interestLabel" prefHeight="34.0" prefWidth="193.0" text="2">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="dateOpenLabel" prefHeight="34.0" prefWidth="193.0" text="3">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="dateCloseLabel" prefHeight="34.0" prefWidth="194.0" text="4">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="currencyLabel" prefHeight="34.0" prefWidth="194.0" text="5">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="sumLabel" prefHeight="34.0" prefWidth="194.0" text="6">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="statusLabel" prefHeight="34.0" prefWidth="194.0" text="7">
+                     <font>
+                        <Font name="MS Outlook" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Label layoutX="254.0" layoutY="21.0" text="Данные заявки на вклад">
+               <font>
+                  <Font name="MS Outlook" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ToolBar layoutY="7.0" prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #575965;">
+         <items>
+            <Button fx:id="myAccountButton" mnemonicParsing="false" onAction="#myAccountButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Учетная запись">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="loanOrderButton" mnemonicParsing="false" onAction="#loanOrderButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Заявки на кредиты">
+               <font>
+                  <Font name="MS Outlook" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="depositOrderButton" mnemonicParsing="false" onAction="#depositOrderButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Заявки на вклады">
+               <font>
+                  <Font name="MS Outlook" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="loanButton" mnemonicParsing="false" onAction="#loanButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Кредиты">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="depositButton" mnemonicParsing="false" onAction="#depositButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Вклады">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="rateButton" mnemonicParsing="false" onAction="#rateButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Курсы валют">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </items>
+      </ToolBar>
+   </children>
+</AnchorPane>

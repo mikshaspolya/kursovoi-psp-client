@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #575965;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kursovoi.client.admin.AdminRateController">
+   <children>
+      <AnchorPane layoutY="54.0" prefHeight="346.0" prefWidth="700.0" style="-fx-background-color: #fefefe;">
+         <children>
+            <AnchorPane prefHeight="346.0" prefWidth="254.0" style="-fx-background-color: #f5cc5a;">
+               <children>
+                  <Label layoutX="28.0" layoutY="26.0" text="Актуальные курсы валют">
+                     <font>
+                        <Font name="MS Outlook" size="17.0" />
+                     </font>
+                  </Label>
+                  <VBox layoutX="43.0" layoutY="136.0" prefHeight="107.0" prefWidth="75.0">
+                     <children>
+                        <Label prefHeight="34.0" prefWidth="70.0" text="1 USD">
+                           <font>
+                              <Font name="MS Outlook" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="70.0" text="1 EUR">
+                           <font>
+                              <Font name="MS Outlook" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="70.0" text="100 RUB">
+                           <font>
+                              <Font name="MS Outlook" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="134.0" layoutY="136.0" prefHeight="107.0" prefWidth="75.0">
+                     <children>
+                        <Label fx:id="usdToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
+                           <font>
+                              <Font name="MS Outlook" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="eurToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
+                           <font>
+                              <Font name="MS Outlook" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="rubToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
+                           <font>
+                              <Font name="MS Outlook" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Label layoutX="134.0" layoutY="103.0" text="BYN">
+                     <font>
+                        <Font name="MS Outlook" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Label layoutX="379.0" layoutY="27.0" text="Обновление курсов валют">
+               <font>
+                  <Font name="MS Outlook" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="454.0" layoutY="82.0" text="BYN">
+               <font>
+                  <Font name="MS Outlook" size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usdToBynTextField" layoutX="454.0" layoutY="119.0" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #fefefe; -fx-border-color: silver; -fx-border-radius: 10;">
+               <font>
+                  <Font name="MS Outlook" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="eurToBynTextField" layoutX="454.0" layoutY="159.0" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #fefefe; -fx-border-color: silver; -fx-border-radius: 10;">
+               <font>
+                  <Font name="MS Outlook" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="rubToBynTextField" layoutX="454.0" layoutY="201.0" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #fefefe; -fx-border-color: silver; -fx-border-radius: 10;">
+               <font>
+                  <Font name="MS Outlook" size="15.0" />
+               </font>
+            </TextField>
+            <Label layoutX="343.0" layoutY="116.0" prefHeight="34.0" prefWidth="70.0" text="1 USD">
+               <font>
+                  <Font name="MS Outlook" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="343.0" layoutY="156.0" prefHeight="34.0" prefWidth="70.0" text="1 EUR">
+               <font>
+                  <Font name="MS Outlook" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="343.0" layoutY="198.0" prefHeight="34.0" prefWidth="70.0" text="100 RUB">
+               <font>
+                  <Font name="MS Outlook" size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="updateRateButton" layoutX="412.0" layoutY="276.0" mnemonicParsing="false" onAction="#updateRateButtonClicked" style="-fx-background-color: #fefefe;" text="Обновить">
+               <font>
+                  <Font name="MS Outlook" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <ToolBar layoutY="8.0" prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #575965;">
+         <items>
+            <Button fx:id="myAccountButton" mnemonicParsing="false" onAction="#myAccountButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Учетная запись">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="loanOrderButton" mnemonicParsing="false" onAction="#loanOrderButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Заявки на кредиты">
+               <font>
+                  <Font name="MS Outlook" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="depositOrderButton" mnemonicParsing="false" onAction="#depositOrderButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Заявки на вклады">
+               <font>
+                  <Font name="MS Outlook" size="10.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="loanButton" mnemonicParsing="false" onAction="#loanButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Кредиты">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="depositButton" mnemonicParsing="false" onAction="#depositButtonClicked" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Вклады">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="rateButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" style="-fx-background-color: #fefefe;" text="Курсы валют">
+               <font>
+                  <Font name="MS Outlook" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </items>
+      </ToolBar>
+   </children>
+</AnchorPane>
