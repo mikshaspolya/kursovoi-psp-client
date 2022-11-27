@@ -13,7 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ShowAccountsController {
     @FXML
     private ResourceBundle resources;

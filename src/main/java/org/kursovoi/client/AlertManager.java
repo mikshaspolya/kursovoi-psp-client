@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AlertManager {
     public static void showMessage(String msg) {
         Stage stage = new Stage();

@@ -5,8 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.io.IOException;
 
+@SpringBootApplication
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -15,7 +19,12 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    @Override
+    public void init() {
+        SpringApplication.run(getClass()).getAutowireCapableBeanFactory().autowireBean(this);
+    }
+
     public static void main(String[] args) {
-        launch();
+        Application.launch();
     }
 }

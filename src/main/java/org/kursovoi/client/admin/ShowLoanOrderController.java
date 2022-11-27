@@ -12,7 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.kursovoi.client.AlertManager;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ShowLoanOrderController {
 
     @FXML

@@ -13,7 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.kursovoi.client.HelloApplication;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdminAccountController {
 
     @FXML

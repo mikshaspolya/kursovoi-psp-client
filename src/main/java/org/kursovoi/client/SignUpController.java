@@ -14,7 +14,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SignUpController {
     @FXML
     private ResourceBundle resources;

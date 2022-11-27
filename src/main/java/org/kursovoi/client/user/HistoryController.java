@@ -15,8 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class HistoryController {
 
     @FXML

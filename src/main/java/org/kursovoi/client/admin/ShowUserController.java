@@ -13,7 +13,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ShowUserController {
 
     @FXML

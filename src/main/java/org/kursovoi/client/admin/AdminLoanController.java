@@ -11,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AdminLoanController {
 
     @FXML
