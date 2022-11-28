@@ -8,6 +8,7 @@ open module org.kursovoi.client {
     requires spring.aop;
     requires spring.boot.starter.integration;
     requires com.google.gson;
+    requires static lombok;
 
     requires spring.integration.core;
     requires spring.integration.ip;
@@ -16,6 +17,11 @@ open module org.kursovoi.client {
     /*opens org.kursovoi.client to javafx.fxml;
     opens org.kursovoi.client.user to javafx.fxml;
     opens org.kursovoi.client.admin to javafx.fxml;
-    */exports org.kursovoi.client;
+    */
+    exports org.kursovoi.client.util.encoder;
+    exports org.kursovoi.client.util.json;
+    exports org.kursovoi.client.sender;
     exports org.kursovoi.client.dto;
+    exports org.kursovoi.client.basic;
+    exports org.kursovoi.client;
 }

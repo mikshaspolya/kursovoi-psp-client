@@ -1,4 +1,4 @@
-package org.kursovoi.client;
+package org.kursovoi.client.basic;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

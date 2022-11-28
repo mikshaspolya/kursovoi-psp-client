@@ -1,4 +1,4 @@
-package org.kursovoi.client;
+package org.kursovoi.client.basic;
 
 import java.io.IOException;
 import java.net.URL;

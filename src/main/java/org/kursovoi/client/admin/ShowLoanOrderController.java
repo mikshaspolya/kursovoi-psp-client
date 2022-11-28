@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import org.kursovoi.client.AlertManager;
+import org.kursovoi.client.basic.AlertManager;
 import org.springframework.stereotype.Component;
 
 @Component

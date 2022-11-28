@@ -47,9 +47,10 @@ dependencies {
     implementation 'org.springframework.integration:spring-integration-ip:5.5.14'
 
     implementation 'com.google.code.gson:gson:2.10'
+    implementation 'org.openjfx:javafx-graphics:13.0.1'
 
-    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")

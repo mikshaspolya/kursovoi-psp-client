@@ -1,4 +1,4 @@
-package org.kursovoi.client;
+package org.kursovoi.client.basic;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.kursovoi.client.HelloApplication;
 import org.kursovoi.client.dto.AuthRequestDto;
 import org.kursovoi.client.dto.UserDto;
 import org.kursovoi.client.sender.CommandType;
-import org.kursovoi.client.sender.MessageJobScheduler;
+import org.kursovoi.client.sender.MessageSender;
 import org.kursovoi.client.util.json.RequestSerializer;
 import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ import java.util.ResourceBundle;
 public class MainController {
 
     @Autowired
-    private MessageJobScheduler messageJobScheduler;
+    private MessageSender messageJobScheduler;
     @Autowired
     private RequestSerializer<AuthRequestDto> serializer;
     @Autowired
@@ -66,11 +69,11 @@ public class MainController {
     public void signInButtonClicked(ActionEvent actionEvent) throws IOException {
         if (!loginField.getText().isBlank() && !passwordField.getText().isBlank()) {
             AuthRequestDto dto = new AuthRequestDto(loginField.getText(), passwordField.getText());
-            String response = messageJobScheduler.sendMessageJob(CommandType.AUTHENTICATE_USER, serializer.apply(dto));
+            String response = messageJobScheduler.sendMessage(CommandType.AUTHENTICATE_USER, serializer.apply(dto));
             if (response.contains("ERROR")) {
-                AlertManager.showMessage(errorDeserializer.apply(response));
+                AlertManager.showMessage(errorDeserializer.apply(response, String.class));
             } else {
-                UserDto user = deserializer.apply(response);
+                UserDto user = deserializer.apply(response, UserDto.class);
                 if (user.getRole().equals("ADMIN")) {
                     signInButton.getScene().getWindow().hide();
                     var loader = new FXMLLoader(HelloApplication.class.getResource("admin/adminAccount.fxml"));

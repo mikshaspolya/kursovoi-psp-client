@@ -8,12 +8,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class MessageSender {
 
-    private final TcpClientGateway tcpClientGateway;
-
     @Autowired
-    public MessageSender(TcpClientGateway tcpClientGateway) {
-        this.tcpClientGateway = tcpClientGateway;
-    }
+    private TcpClientGateway tcpClientGateway;
 
     public String sendMessage(CommandType command, String request) {
         byte[] responseBytes = tcpClientGateway.send((command.name() + ", " + request).getBytes(StandardCharsets.UTF_8));
