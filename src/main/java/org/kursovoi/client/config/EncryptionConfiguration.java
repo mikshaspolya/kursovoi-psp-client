@@ -5,10 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -21,10 +19,10 @@ import java.security.spec.X509EncodedKeySpec;
 public class EncryptionConfiguration {
 
     @Bean
-    public PublicKey publicKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, URISyntaxException {
+    public PublicKey publicKey() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        File publicKeyFile = new File(getClass().getClassLoader().getResource("public.key").toURI());
-        byte[] publicKeyBytes = Files.readAllBytes(publicKeyFile.toPath());
+        InputStream inputStream = getClass().getResourceAsStream("/public.key");
+        byte[] publicKeyBytes = inputStream.readAllBytes();
         EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
         return keyFactory.generatePublic(publicKeySpec);
     }

@@ -14,7 +14,6 @@ public class MessageJobScheduler {
         this.messageService = messageService;
     }
 
-    @Scheduled(fixedDelay = 1000L)
     public String sendMessageJob(CommandType command, String request) {
         return messageService.sendMessage(command, request);
     }

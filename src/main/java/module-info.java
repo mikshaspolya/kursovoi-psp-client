@@ -17,4 +17,5 @@ open module org.kursovoi.client {
     opens org.kursovoi.client.user to javafx.fxml;
     opens org.kursovoi.client.admin to javafx.fxml;
     */exports org.kursovoi.client;
+    exports org.kursovoi.client.dto;
 }
