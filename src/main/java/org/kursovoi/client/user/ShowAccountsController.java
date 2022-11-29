@@ -13,10 +13,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.kursovoi.client.util.window.Form;
+import org.kursovoi.client.util.window.Presenter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShowAccountsController {
+
+    @Autowired
+    private Presenter presenter;
+
     @FXML
     private ResourceBundle resources;
 
@@ -79,11 +86,7 @@ public class ShowAccountsController {
     @FXML
     public void addButtonClicked(ActionEvent actionEvent) throws IOException {
         addButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("addCard.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.ADD_CARD);
     }
 
     @FXML
@@ -93,62 +96,38 @@ public class ShowAccountsController {
     }
 
     @FXML
-    public void myAccountButtonClicked(ActionEvent actionEvent) throws IOException {
-        myAccountButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("userAccount.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void historyButtonClicked(ActionEvent actionEvent) throws IOException {
-        historyButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("history.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void paymentButtonClicked(ActionEvent actionEvent) throws IOException {
-        paymentButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("payment.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void loanButtonClicked(ActionEvent actionEvent) throws IOException {
-        loanButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("loan.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    public void depositButtonClicked(ActionEvent actionEvent) throws IOException {
+    void depositButtonClicked(ActionEvent event) throws IOException {
         depositButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("deposit.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.DEPOSIT);
     }
 
     @FXML
-    public void rateButtonClicked(ActionEvent actionEvent) throws IOException {
+    void historyButtonClicked(ActionEvent event) throws IOException {
+        historyButton.getScene().getWindow().hide();
+        presenter.show(Form.HISTORY);
+    }
+
+    @FXML
+    void loanButtonClicked(ActionEvent event) throws IOException {
+        loanButton.getScene().getWindow().hide();
+        presenter.show(Form.LOAN);
+    }
+
+    @FXML
+    void myAccountButtonClicked(ActionEvent event) throws IOException {
+        myAccountButton.getScene().getWindow().hide();
+        presenter.show(Form.USER_ACCOUNT);
+    }
+
+    @FXML
+    void paymentButtonClicked(ActionEvent event) throws IOException {
+        paymentButton.getScene().getWindow().hide();
+        presenter.show(Form.PAYMENT);
+    }
+
+    @FXML
+    void rateButtonClicked(ActionEvent event) throws IOException {
         rateButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("rate.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.RATE);
     }
 }

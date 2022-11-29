@@ -13,10 +13,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import org.kursovoi.client.HelloApplication;
+import org.kursovoi.client.util.window.Form;
+import org.kursovoi.client.util.window.Presenter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AdminAccountController {
+
+    @Autowired
+    private Presenter presenter;
 
     @FXML
     private ResourceBundle resources;
@@ -72,81 +78,49 @@ public class AdminAccountController {
     @FXML
     void depositButtonClicked(ActionEvent event) throws IOException {
         depositButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("deposit.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.DEPOSIT_ADMIN);
     }
 
     @FXML
     void depositOrderButtonClicked(ActionEvent event) throws IOException {
         depositOrderButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("depositOrder.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.DEPOSIT_ORDER);
     }
 
     @FXML
     void editButtonClicked(ActionEvent event) throws IOException {
         editButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("editAdminAccount.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.EDIT_ADMIN_ACCOUNT);
     }
 
     @FXML
     void exitButtonClicked(ActionEvent event) throws IOException {
         exitButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(HelloApplication.class.getResource("main.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.MAIN);
     }
 
     @FXML
     void loanButtonClicked(ActionEvent event) throws IOException {
         loanButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("loan.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.LOAN_ADMIN);
     }
 
     @FXML
     void loanOrderButtonClicked(ActionEvent event) throws IOException {
         loanOrderButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("loanOrder.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.LOAN_ORDER);
     }
 
     @FXML
     void rateButtonClicked(ActionEvent event) throws IOException {
         rateButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("rate.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.RATE_ADMIN);
     }
 
     @FXML
     void showButtonClicked(ActionEvent event) throws IOException {
         showButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("showUser.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.SHOW_USER);
     }
 
     @FXML

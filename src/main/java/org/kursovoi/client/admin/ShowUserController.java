@@ -1,8 +1,5 @@
 package org.kursovoi.client.admin;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +10,20 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import org.kursovoi.client.util.window.Form;
+import org.kursovoi.client.util.window.Presenter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 @Component
 public class ShowUserController {
+
+    @Autowired
+    private Presenter presenter;
 
     @FXML
     private ResourceBundle resources;
@@ -78,80 +85,48 @@ public class ShowUserController {
     @FXML
     void depositButtonClicked(ActionEvent event) throws IOException {
         depositButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("deposit.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.DEPOSIT_ADMIN);
     }
 
     @FXML
     void depositOrderButtonClicked(ActionEvent event) throws IOException {
         depositOrderButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("depositOrder.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.DEPOSIT_ORDER);
     }
 
     @FXML
     void loanButtonClicked(ActionEvent event) throws IOException {
         loanButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("loan.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.LOAN_ADMIN);
     }
 
     @FXML
     void loanOrderButtonClicked(ActionEvent event) throws IOException {
         loanOrderButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("loanOrder.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.LOAN_ORDER);
     }
 
     @FXML
     void myAccountButtonClicked(ActionEvent event) throws IOException {
         myAccountButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("adminAccount.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.ADMIN_ACCOUNT);
     }
 
     @FXML
     void rateButtonClicked(ActionEvent event) throws IOException {
         rateButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("rate.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.RATE_ADMIN);
     }
 
     @FXML
     void showButtonClicked(ActionEvent event) throws IOException {
         showButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("showUserAccounts.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.SHOW_USER_ACCOUNTS);
     }
 
     @FXML
     void updateStatusButtonClicked(ActionEvent event) throws IOException {
         myAccountButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("adminAccount.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.ADMIN_ACCOUNT);
     }
 }

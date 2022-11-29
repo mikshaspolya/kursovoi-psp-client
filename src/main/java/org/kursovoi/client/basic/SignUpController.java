@@ -14,10 +14,17 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.kursovoi.client.util.window.Form;
+import org.kursovoi.client.util.window.Presenter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SignUpController {
+
+    @Autowired
+    private Presenter presenter;
+
     @FXML
     private ResourceBundle resources;
 
@@ -61,10 +68,6 @@ public class SignUpController {
 
     public void back(ActionEvent actionEvent) throws IOException {
         backButton.getScene().getWindow().hide();
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        presenter.show(Form.MAIN);
     }
 }

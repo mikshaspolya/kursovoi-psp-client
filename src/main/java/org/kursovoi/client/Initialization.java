@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Initialization implements ApplicationListener<UiApplication.StageReadyEvent> {
 
     @Autowired
-    private ApplicationContext applicationContext ;
+    private ApplicationContext applicationContext;
 
     @Override
     public void onApplicationEvent(UiApplication.StageReadyEvent event) {
