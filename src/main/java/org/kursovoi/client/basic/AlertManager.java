@@ -11,8 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class AlertManager {
     public static void showMessage(String msg) {
+
         Stage stage = new Stage();
         AnchorPane pane = new AnchorPane();
+
+        if(msg.contains("ERROR")){
+            stage.setTitle("ERROR");
+            msg = msg.replace("ERROR", "");
+        }
 
         Label label = new Label(msg);
         AnchorPane.setTopAnchor(label, 20.0);
