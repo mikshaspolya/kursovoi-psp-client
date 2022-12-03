@@ -2,14 +2,9 @@ package org.kursovoi.client.basic;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import org.kursovoi.client.HelloApplication;
 import org.kursovoi.client.dto.AuthRequestDto;
 import org.kursovoi.client.dto.UserDto;
 import org.kursovoi.client.sender.CommandType;
@@ -72,6 +67,7 @@ public class MainController {
                 AlertManager.showMessage(errorDeserializer.apply(response, String.class));
             } else {
                 UserDto user = deserializer.apply(response, UserDto.class);
+                UserHolder.setUser(user);
                 if (user.getRole().equals("ADMIN")) {
                     signInButton.getScene().getWindow().hide();
                     presenter.show(Form.ADMIN_ACCOUNT);

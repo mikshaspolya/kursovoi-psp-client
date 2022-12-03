@@ -2,12 +2,15 @@ package org.kursovoi.client.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
+import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.basic.UserHolder;
+import org.kursovoi.client.dto.AccountDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
+import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -22,6 +26,14 @@ public class AddAccountController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<AccountDto> serializer;
+    @Autowired
+    private ResponseDeserializer<String> deserializer;
+    @Autowired
+    private ResponseDeserializer<String> errorDeserializer;
 
     @FXML
     private ResourceBundle resources;
@@ -54,8 +66,13 @@ public class AddAccountController {
     private Button rateButton;
 
     @FXML
-    void addButtonClicked(ActionEvent event) {
-
+    void addButtonClicked(ActionEvent event) throws IOException {
+        AccountDto dto = AccountDto.builder().holderId(UserHolder.getUser().getId()).currency(accountCurrencyComboBox.getValue()).build();
+        var request = serializer.apply(dto);
+        var response = messageSender.sendMessage(CommandType.CREATE_ACCOUNT, request);
+        AlertManager.showMessage(deserializer.apply(response, String.class));
+        addButton.getScene().getWindow().hide();
+        presenter.show(Form.USER_ACCOUNT);
     }
 
     @FXML

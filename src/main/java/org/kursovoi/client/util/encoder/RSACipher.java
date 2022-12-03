@@ -7,6 +7,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Component
 public class RSACipher {
@@ -18,9 +19,9 @@ public class RSACipher {
         this.cipher = cipher;
     }
 
-    private String cipher(String message) throws IllegalBlockSizeException, BadPaddingException {
+    public String cipher(String message) throws IllegalBlockSizeException, BadPaddingException {
         byte[] secretMessageBytes = message.getBytes(StandardCharsets.UTF_8);
         byte[] encryptedMessageBytes = cipher.doFinal(secretMessageBytes);
-        return new String(encryptedMessageBytes, StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(encryptedMessageBytes);
     }
 }

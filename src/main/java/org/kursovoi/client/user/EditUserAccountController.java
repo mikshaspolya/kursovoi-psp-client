@@ -2,7 +2,10 @@ package org.kursovoi.client.user;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.basic.UserHolder;
+import org.kursovoi.client.dto.AccountDto;
+import org.kursovoi.client.dto.UserDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
+import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +32,14 @@ public class EditUserAccountController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<UserDto> serializer;
+    @Autowired
+    private ResponseDeserializer<String> deserializer;
+    @Autowired
+    private ResponseDeserializer<String> errorDeserializer;
 
     @FXML
     private ResourceBundle resources;
@@ -65,6 +84,17 @@ public class EditUserAccountController {
     private Button rateButton;
 
     @FXML
+    void initialize() {
+        var user = UserHolder.getUser();
+        editNameField.setText(user.getName());
+        editSurnameField.setText(user.getSurname());
+        editLoginField.setText(user.getLogin());
+        editEmailField.setText(user.getEmail());
+        editPhoneField.setText(user.getPhoneNumber());
+    }
+
+
+    @FXML
     void editButtonClicked(ActionEvent event) throws IOException {
         String name = editNameField.getText();
         String surname = editSurnameField.getText();
@@ -72,7 +102,18 @@ public class EditUserAccountController {
         String email = editEmailField.getText();
         String phone = editPhoneField.getText();
 
-        //сохранение данных в бд
+        UserDto dto = UserDto.builder()
+                .name(name)
+                .surname(surname)
+                .login(login)
+                .email(email)
+                .phoneNumber(phone)
+                .id(UserHolder.getUser().getId())
+                .build();
+
+        String request = serializer.apply(dto);
+        String response = messageSender.sendMessage(CommandType.UPDATE_USER, request);
+        AlertManager.showMessage(deserializer.apply(response, String.class));
 
         myAccountButton.getScene().getWindow().hide();
         presenter.show(Form.MAIN);

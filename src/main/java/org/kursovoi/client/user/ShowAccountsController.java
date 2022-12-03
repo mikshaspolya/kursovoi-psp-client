@@ -1,9 +1,12 @@
 package org.kursovoi.client.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,16 +16,30 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import lombok.Setter;
+import org.kursovoi.client.dto.AccountDto;
+import org.kursovoi.client.dto.CardDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.json.Jackson2JsonObjectMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShowAccountsController {
 
+    private static AccountDto account;
+
     @Autowired
     private Presenter presenter;
+
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<Long> serializer;
 
     @FXML
     private ResourceBundle resources;
@@ -37,7 +54,7 @@ public class ShowAccountsController {
     private Button addButton;
 
     @FXML
-    private ListView<String> cardListView;
+    private ListView<CardDto> cardListView;
 
     @FXML
     private Label currencyLabel;
@@ -72,15 +89,27 @@ public class ShowAccountsController {
     @FXML
     private Label sumLabel;
 
-    @FXML
-    void initialize() {
-        accountNumberLabel.setText("2");
-        dateLabel.setText("21.11.2022");
-        currencyLabel.setText("USD");
-        statusLabel.setText("active");
-        sumLabel.setText("2000");
+    public static void setAccount(AccountDto account) {
+        ShowAccountsController.account = account;
+    }
 
-        cardListView.getItems().addAll("Безымянная ****4884 08/24 10.24 p.", "name ****4884 08/25 100.24 p.");
+    @FXML
+    void initialize() throws JsonProcessingException {
+        accountNumberLabel.setText(account.getId().toString());
+        dateLabel.setText(account.getDateOfIssue());
+        currencyLabel.setText(account.getCurrency());
+        statusLabel.setText(account.getStatus());
+        sumLabel.setText(account.getSum().toString());
+
+        var request = serializer.apply(account.getId());
+        var response = messageSender.sendMessage(CommandType.GET_CARDS_OF_ACCOUNT, request);
+
+        Jackson2JsonObjectMapper mapper = new Jackson2JsonObjectMapper();
+        var objectMapper = mapper.getObjectMapper();
+
+        List<CardDto> list = objectMapper.readValue(response, new TypeReference<>() {});
+
+        cardListView.getItems().addAll(list);
     }
 
     @FXML

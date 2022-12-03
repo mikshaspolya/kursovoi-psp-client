@@ -1,12 +1,14 @@
 package org.kursovoi.client.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UpdateSumDto {
 
     private long idEntity;

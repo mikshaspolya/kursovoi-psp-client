@@ -4,6 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import org.kursovoi.client.basic.UserHolder;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,10 @@ public class HistoryController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<Long> serializer;
 
     @FXML
     private ResourceBundle resources;
@@ -48,6 +56,7 @@ public class HistoryController {
 
     @FXML
     private Button rateButton;
+
 
     @FXML
     void depositButtonClicked(ActionEvent event) throws IOException {
@@ -87,6 +96,7 @@ public class HistoryController {
 
     @FXML
     void initialize() {
+        var request = serializer.apply(UserHolder.getUser().getId());
         operationListView.getItems().addAll("Java", "JavaScript", "C#", "Python");
     }
 

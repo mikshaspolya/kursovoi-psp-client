@@ -2,7 +2,15 @@ package org.kursovoi.client.user;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,16 +21,35 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.dto.AccountDto;
+import org.kursovoi.client.dto.CreateCardDto;
+import org.kursovoi.client.dto.UserDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
+import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.ImmutableMessageChannelInterceptor;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AddCardController {
 
+    private static List<AccountDto> accounts;
+
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<CreateCardDto> serializer;
+    @Autowired
+    private ResponseDeserializer<String> deserializer;
+    @Autowired
+    private ResponseDeserializer<String> errorDeserializer;
 
     @FXML
     private ResourceBundle resources;
@@ -64,8 +91,27 @@ public class AddCardController {
     private ComboBox<String> typeComboBox;
 
     @FXML
-    void addButtonClicked(ActionEvent event) {
+    void initialize() {
+        accounts = UserAccountController.getAccounts();
+        accountComboBox.getItems()
+                .addAll(accounts.stream().map(accountDto -> accountDto.getId().toString()).collect(Collectors.toList()));
+        typeComboBox.getItems().addAll("DEBIT", "CREDIT");
+        cardIssuerComboBox.getItems().addAll("VISA", "MASTER_CARD", "MIR", "BELCARD");
+    }
 
+    @FXML
+    void addButtonClicked(ActionEvent event) throws IOException {
+        CreateCardDto dto = CreateCardDto.builder()
+                .cardIssuer(cardIssuerComboBox.getValue())
+                .holderName(nameField.getText())
+                .idAccount(Long.parseLong(accountComboBox.getValue()))
+                .type(typeComboBox.getValue())
+                .build();
+        var request = serializer.apply(dto);
+        var response = messageSender.sendMessage(CommandType.CREATE_CARD, request);
+        AlertManager.showMessage(deserializer.apply(response, String.class));
+        addButton.getScene().getWindow().hide();
+        presenter.show(Form.SHOW_ACCOUNTS);
     }
 
     @FXML

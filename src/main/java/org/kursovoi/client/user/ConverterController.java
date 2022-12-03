@@ -13,16 +13,34 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import lombok.Setter;
+import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.basic.UserHolder;
+import org.kursovoi.client.dto.CreateLoanOrderDto;
+import org.kursovoi.client.dto.CurrencyCourseDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
+import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Setter
 public class ConverterController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<Long> serializer;
+    @Autowired
+    private ResponseDeserializer<CurrencyCourseDto> deserializer;
+
+    private CurrencyCourseDto currencyCourseForToday;
 
     @FXML
     private ResourceBundle resources;
@@ -62,7 +80,21 @@ public class ConverterController {
 
     @FXML
     void convertButtonClicked(ActionEvent event) {
-
+        var currency = currencyComboBox.getValue();
+        double result;
+        switch(currency) {
+            case "USD" : {
+                result = currencyCourseForToday.getCostUsd() * Double.parseDouble(sumTextField.getText());
+            }
+            case "EUR" : {
+                result = currencyCourseForToday.getCostEur() * Double.parseDouble(sumTextField.getText());
+            }
+            case "RUB" : {
+                result = currencyCourseForToday.getCostRub() * Double.parseDouble(sumTextField.getText());
+            }
+            default: result = 0;
+        }
+        AlertManager.showMessage(Double.toString(result));
     }
 
     @FXML
@@ -103,6 +135,10 @@ public class ConverterController {
 
     @FXML
     void initialize() {
-        currencyComboBox.getItems().addAll("USD", "BYN", "EUR", "RUB");
+        currencyComboBox.getItems().addAll("USD", "EUR", "RUB");
+        var request = serializer.apply(UserHolder.getUser().getId());
+        var response =
+                messageSender.sendMessage(CommandType.GET_CURRENCY_COURSE_FOR_TODAY, request);
+        setCurrencyCourseForToday(deserializer.apply(response, CurrencyCourseDto.class));
     }
 }

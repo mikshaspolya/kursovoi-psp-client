@@ -1,18 +1,27 @@
 package org.kursovoi.client.dto;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Data
-@ToString
-@Component
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AccountDto {
 
-    private long id;
-    private long sum;
+    private Long id;
+    private Long sum;
     private String dateOfIssue;
     private String currency;
     private String status;
-    private long holderId;
+    private Long holderId;
+
+    @Override
+    public String toString() {
+        return "Счет: " +
+                id +
+                ", " + dateOfIssue +
+                ", " + currency +
+                ", сумма = " + sum;
+    }
 }

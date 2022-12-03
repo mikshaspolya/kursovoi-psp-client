@@ -50,49 +50,49 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                  <VBox layoutX="127.0" layoutY="117.0" prefHeight="107.0" prefWidth="75.0">
-                     <children>
-                        <Label fx:id="usdToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
-                           <font>
-                              <Font name="MS Outlook" size="15.0" />
-                           </font>
+                        <VBox layoutX="127.0" layoutY="117.0" prefHeight="107.0" prefWidth="75.0">
+                            <children>
+                                <Label fx:id="usdToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
+                                    <font>
+                                        <Font name="MS Outlook" size="15.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="eurToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
+                                    <font>
+                                        <Font name="MS Outlook" size="15.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="rubToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
+                                    <font>
+                                        <Font name="MS Outlook" size="15.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <Label layoutX="127.0" layoutY="84.0" text="BYN">
+                            <font>
+                                <Font name="MS Outlook" size="17.0" />
+                            </font>
                         </Label>
-                        <Label fx:id="eurToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
-                           <font>
-                              <Font name="MS Outlook" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="rubToBynLabel" prefHeight="34.0" prefWidth="70.0" text="1">
-                           <font>
-                              <Font name="MS Outlook" size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Label layoutX="127.0" layoutY="84.0" text="BYN">
-                     <font>
-                        <Font name="MS Outlook" size="17.0" />
-                     </font>
-                  </Label>
                     </children>
                 </AnchorPane>
                 <LineChart fx:id="rateLineChart" layoutX="278.0" layoutY="66.0" prefHeight="265.0" prefWidth="390.0">
                     <xAxis>
-                        <CategoryAxis label="BYN" side="BOTTOM">
-                     <tickLabelFont>
-                        <Font name="MS Outlook" size="8.0" />
-                     </tickLabelFont></CategoryAxis>
+                        <CategoryAxis side="BOTTOM" fx:id="xAxis">
+                            <tickLabelFont>
+                                <Font name="MS Outlook" size="8.0" />
+                            </tickLabelFont></CategoryAxis>
                     </xAxis>
                     <yAxis>
-                        <NumberAxis fx:id="currencyLabel" side="LEFT" />
+                        <NumberAxis fx:id="yAxis" side="LEFT" />
                     </yAxis>
                 </LineChart>
-            <Label layoutX="385.0" layoutY="24.0" text="График BYN к">
-               <font>
-                  <Font name="MS Outlook" size="17.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="currencyComboBox" layoutX="510.0" layoutY="22.0" onAction="#currencyComboBoxClicked" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #fefefe; -fx-border-color: silver; -fx-border-radius: 10;" />
+                <Label layoutX="385.0" layoutY="24.0" text="График BYN к">
+                    <font>
+                        <Font name="MS Outlook" size="17.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="currencyComboBox" layoutX="510.0" layoutY="22.0" onAction="#currencyComboBoxClicked" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #fefefe; -fx-border-color: silver; -fx-border-radius: 10;" />
             </children>
         </AnchorPane>
         <ToolBar layoutY="7.0" prefHeight="40.0" prefWidth="700.0" style="-fx-background-color: #575965;">

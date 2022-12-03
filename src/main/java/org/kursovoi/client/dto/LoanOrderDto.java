@@ -1,12 +1,14 @@
 package org.kursovoi.client.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class LoanOrderDto {
 
     private long id;
@@ -16,4 +18,14 @@ public class LoanOrderDto {
     private String status;
     private long idLoan;
     private long idUser;
+
+    @Override
+    public String toString() {
+        return "Кредит: " +
+                id +
+                ", " + dateOfIssue +
+                " - " + dateOfEnd +
+                ", " + sum +
+                ", " + status;
+    }
 }

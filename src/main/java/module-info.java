@@ -1,6 +1,7 @@
 open module org.kursovoi.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.base;
     requires spring.boot;
     requires spring.boot.autoconfigure;
     requires spring.context;
@@ -9,7 +10,7 @@ open module org.kursovoi.client {
     requires spring.boot.starter.integration;
     requires com.google.gson;
     requires static lombok;
-
+    requires com.fasterxml.jackson.databind;
     requires spring.integration.core;
     requires spring.integration.ip;
     requires spring.messaging;
