@@ -92,12 +92,12 @@ public class ConverterController {
                 break;
             }
             case "RUB" : {
-                result = currencyCourseForToday.getCostRub() * Double.parseDouble(sumTextField.getText());
+                result = currencyCourseForToday.getCostRub() * Double.parseDouble(sumTextField.getText()) / 100.;
                 break;
             }
             default: result = 0;
         }
-        AlertManager.showMessage(Double.toString(result));
+        sumToBynLabel.setText(String.format("%.2f", result));
     }
 
     @FXML

@@ -12,6 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.basic.UserHolder;
+import org.kursovoi.client.dto.CurrencyCourseDto;
+import org.kursovoi.client.dto.UpdateCurrencyCourseDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
+import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +30,16 @@ public class AdminRateController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<Long> serializer;
+    @Autowired
+    private RequestSerializer<UpdateCurrencyCourseDto> serializerForCurrency;
+    @Autowired
+    private ResponseDeserializer<String> deserializerForCourse;
+    @Autowired
+    private ResponseDeserializer<CurrencyCourseDto> deserializerForTodayCourse;
 
     @FXML
     private ResourceBundle resources;
@@ -69,6 +87,17 @@ public class AdminRateController {
     private TextField usdToBynTextField;
 
     @FXML
+    void initialize() {
+        var requestForCurrencyToday = serializer.apply(UserHolder.getUser().getId());
+        var responseForCurrencyToday =
+                messageSender.sendMessage(CommandType.GET_CURRENCY_COURSE_FOR_TODAY, requestForCurrencyToday);
+        var course = deserializerForTodayCourse.apply(responseForCurrencyToday, CurrencyCourseDto.class);
+        usdToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostUsd()));
+        eurToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostEur()));
+        rubToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostRub()));
+    }
+
+    @FXML
     void depositButtonClicked(ActionEvent event) throws IOException {
         depositButton.getScene().getWindow().hide();
         presenter.show(Form.DEPOSIT_ADMIN);
@@ -99,7 +128,17 @@ public class AdminRateController {
     }
 
     @FXML
-    void updateRateButtonClicked(ActionEvent event) {
-
+    void updateRateButtonClicked(ActionEvent event) throws IOException {
+        UpdateCurrencyCourseDto dto = UpdateCurrencyCourseDto.builder()
+                .costUsd(Double.parseDouble(usdToBynTextField.getText()))
+                .costEur(Double.parseDouble(eurToBynTextField.getText()))
+                .costRub(Double.parseDouble(rubToBynTextField.getText()))
+                .build();
+        var request = serializerForCurrency.apply(dto);
+        var response = deserializerForCourse
+                .apply(messageSender.sendMessage(CommandType.UPDATE_CURRENCY_COURSE, request), String.class);
+        AlertManager.showMessage(response);
+        updateRateButton.getScene().getWindow().hide();
+        presenter.show(Form.RATE_ADMIN);
     }
 }

@@ -5,13 +5,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.dto.*;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.json.RequestSerializer;
+import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,22 @@ public class ShowLoanOrderController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<Long> serializer;
+    @Autowired
+    private ResponseDeserializer<UserDto> deserializerForUser;
+    @Autowired
+    private ResponseDeserializer<LoanDto> deserializerForLoans;
+    @Autowired
+    private RequestSerializer<UpdateStatusDto> serializerForStatus;
+    @Autowired
+    private ResponseDeserializer<String> deserializerForStatus;
+
+    private static LoanOrderDto order;
+    private static LoanDto loan;
+    private static UserDto user;
 
     @FXML
     private ResourceBundle resources;
@@ -74,8 +91,37 @@ public class ShowLoanOrderController {
     @FXML
     private Label sumLabel;
 
+    public static void setOrder(LoanOrderDto order) {
+        ShowLoanOrderController.order = order;
+    }
+
+    @FXML
+    void initialize() {
+        var request = serializer.apply(order.getIdUser());
+        user = deserializerForUser
+                .apply(messageSender.sendMessage(CommandType.GET_SPECIFIC_USER, request), UserDto.class);
+        var requestForLoans = serializer.apply(order.getIdLoan());
+        loan = deserializerForLoans
+                .apply(messageSender.sendMessage(CommandType.GET_SPECIFIC_LOAN, requestForLoans), LoanDto.class);
+
+        currencyLabel.setText(loan.getCurrency());
+        fioLabel.setText(user.getName() + " " + user.getSurname());
+        dateCloseLabel.setText(order.getDateOfEnd());
+        dateOpenLabel.setText(order.getDateOfIssue());
+        interestLabel.setText(Double.toString(loan.getInterest()));
+        sumLabel.setText(Long.toString(order.getSum()));
+        statusLabel.setText(order.getStatus());
+    }
+
     @FXML
     void confirmButtonClicked(ActionEvent event) throws IOException {
+        UpdateStatusDto dto = UpdateStatusDto.builder()
+                .id(order.getId())
+                .newStatus("APPROVED")
+                .build();
+        var request = serializerForStatus.apply(dto);
+        var response = deserializerForStatus
+                .apply(messageSender.sendMessage(CommandType.UPDATE_STATUS_LOAN_ORDER, request), String.class);
         AlertManager.showMessage("Заявка успешно принята!");
         confirmButton.getScene().getWindow().hide();
         presenter.show(Form.ADMIN_ACCOUNT);
@@ -83,8 +129,15 @@ public class ShowLoanOrderController {
 
     @FXML
     void rejectButtonClicked(ActionEvent event) throws IOException {
+        UpdateStatusDto dto = UpdateStatusDto.builder()
+                .id(order.getId())
+                .newStatus("DECLINED")
+                .build();
+        var request = serializerForStatus.apply(dto);
+        var response = deserializerForStatus
+                .apply(messageSender.sendMessage(CommandType.UPDATE_STATUS_LOAN_ORDER, request), String.class);
         AlertManager.showMessage("Заявка успешно отклонена!");
-        rejectButton.getScene().getWindow().hide();
+        confirmButton.getScene().getWindow().hide();
         presenter.show(Form.ADMIN_ACCOUNT);
     }
 

@@ -32,7 +32,7 @@
                </font>
             </Label>
             <ComboBox fx:id="currencyComboBox" layoutX="215.0" layoutY="128.0" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #fefefe; -fx-border-color: silver; -fx-border-radius: 10;" />
-            <Label fx:id="sumToBynLabel" layoutX="410.0" layoutY="178.0" text="2">
+            <Label fx:id="sumToBynLabel" layoutX="410.0" layoutY="178.0">
                <font>
                   <Font name="MS Outlook" size="17.0" />
                </font>

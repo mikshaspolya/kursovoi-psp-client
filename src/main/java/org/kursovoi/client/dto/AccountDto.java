@@ -22,6 +22,7 @@ public class AccountDto {
                 id +
                 ", " + dateOfIssue +
                 ", " + currency +
+                ", " + status +
                 ", сумма = " + sum;
     }
 }

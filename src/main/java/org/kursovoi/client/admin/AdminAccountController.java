@@ -2,7 +2,11 @@ package org.kursovoi.client.admin;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,17 +16,34 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import lombok.Setter;
 import org.kursovoi.client.HelloApplication;
+import org.kursovoi.client.basic.AlertManager;
+import org.kursovoi.client.basic.UserHolder;
+import org.kursovoi.client.dto.AccountDto;
+import org.kursovoi.client.dto.UserDto;
+import org.kursovoi.client.sender.CommandType;
+import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.user.ShowAccountsController;
+import org.kursovoi.client.util.json.RequestSerializer;
 import org.kursovoi.client.util.window.Form;
 import org.kursovoi.client.util.window.Presenter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.json.Jackson2JsonObjectMapper;
 import org.springframework.stereotype.Component;
 
 @Component
+@Setter
 public class AdminAccountController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private MessageSender messageSender;
+    @Autowired
+    private RequestSerializer<Long> serializer;
+
+    private List<UserDto> listOfUsers;
 
     @FXML
     private ResourceBundle resources;
@@ -73,7 +94,7 @@ public class AdminAccountController {
     private Label surnameLabel;
 
     @FXML
-    private ListView<?> userListView;
+    private ListView<UserDto> userListView;
 
     @FXML
     void depositButtonClicked(ActionEvent event) throws IOException {
@@ -120,11 +141,34 @@ public class AdminAccountController {
     @FXML
     void showButtonClicked(ActionEvent event) throws IOException {
         showButton.getScene().getWindow().hide();
-        presenter.show(Form.SHOW_USER);
+        if (userListView.getSelectionModel().getSelectedIndex() <= -1) {
+            AlertManager.showMessage("Выберите пользователя");
+            presenter.show(Form.ADMIN_ACCOUNT);
+        } else {
+            showButton.getScene().getWindow().hide();
+            UserDto selectedUser = userListView.getSelectionModel().getSelectedItem();
+            ShowUserController.setUser(selectedUser);
+            presenter.show(Form.SHOW_USER);
+        }
     }
 
     @FXML
-    void initialize() {
+    void initialize() throws JsonProcessingException {
+        UserDto user = UserHolder.getUser();
+        nameLabel.setText(user.getName());
+        surnameLabel.setText(user.getSurname());
+        loginLabel.setText(user.getLogin());
+        emailLabel.setText(user.getEmail());
+        phoneLabel.setText(user.getPhoneNumber());
+        var request = serializer.apply(UserHolder.getUser().getId());
+        var response = messageSender.sendMessage(CommandType.GET_ALL_USERS, request);
+
+        Jackson2JsonObjectMapper mapper = new Jackson2JsonObjectMapper();
+        var objectMapper = mapper.getObjectMapper();
+
+        List<UserDto> list = objectMapper.readValue(response, new TypeReference<>() {});
+        setListOfUsers(list);
+        userListView.getItems().addAll(list);
 
     }
 }

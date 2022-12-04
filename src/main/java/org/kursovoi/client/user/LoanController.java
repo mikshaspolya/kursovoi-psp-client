@@ -64,9 +64,6 @@ public class LoanController {
     private TextField loanSumField;
 
     @FXML
-    private ComboBox<String> loanCurrencyComboBox;
-
-    @FXML
     private ComboBox<LoanDto> loanTypeComboBox;
 
     @FXML

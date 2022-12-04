@@ -21,4 +21,14 @@ public class UserDto {
     private String email;
     private String role;
 
+    @Override
+    public String toString() {
+        return "Пользватель: " +
+                " " + id +
+                ", " + login +
+                ", " + name +
+                ", " + surname +
+                ", " + status +
+                ", " + role;
+    }
 }

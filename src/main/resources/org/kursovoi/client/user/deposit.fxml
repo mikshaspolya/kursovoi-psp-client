@@ -35,7 +35,6 @@
                                 <Font name="MS Outlook" size="14.0" />
                             </font>
                         </TextField>
-                        <ComboBox fx:id="depositCurrencyComboBox" layoutX="74.0" layoutY="161.0" prefHeight="30.0" prefWidth="171.0" promptText="Выберите валюту" style="-fx-background-color: #fefefe; -fx-border-color: silver;" />
                     </children>
                 </AnchorPane>
                 <Label layoutX="452.0" layoutY="24.0" text="Ваши вклады">

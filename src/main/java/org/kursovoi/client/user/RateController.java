@@ -3,8 +3,7 @@ package org.kursovoi.client.user;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +28,7 @@ import org.kursovoi.client.dto.CurrencyCourseDto;
 import org.kursovoi.client.dto.LoanOrderDto;
 import org.kursovoi.client.sender.CommandType;
 import org.kursovoi.client.sender.MessageSender;
+import org.kursovoi.client.util.comparator.DateComparator;
 import org.kursovoi.client.util.json.RequestSerializer;
 import org.kursovoi.client.util.json.ResponseDeserializer;
 import org.kursovoi.client.util.window.Form;
@@ -43,6 +43,8 @@ public class RateController {
 
     @Autowired
     private Presenter presenter;
+    @Autowired
+    private DateComparator dateComparator;
     @Autowired
     private MessageSender messageSender;
     @Autowired
@@ -112,30 +114,30 @@ public class RateController {
 
     @FXML
     void currencyComboBoxClicked(ActionEvent event) {
+        rateLineChart.getData().clear();
         var pickedCurrency = currencyComboBox.getValue();
-        /*var result = switch (pickedCurrency) {
-            case "USD" -> currencyCourses.stream().map(CurrencyCourseDto::getCostUsd).collect(Collectors.toList());
-            case "EUR" -> currencyCourses.stream().map(CurrencyCourseDto::getCostEur).collect(Collectors.toList());
-            case "RUB" -> currencyCourses.stream().map(CurrencyCourseDto::getCostRub).collect(Collectors.toList());
-        };*/
+        Map<String, Double> filteredMap = new HashMap<>();
+        switch(pickedCurrency) {
+            case "USD" : {
+                currencyCourses.forEach(currency -> filteredMap.put(currency.getDate(), currency.getCostUsd()));
+                break;
+            }
+            case "EUR" : {
+                currencyCourses.forEach(currency -> filteredMap.put(currency.getDate(), currency.getCostEur()));
+                break;
+            }
+            case "RUB" : {
+                currencyCourses.forEach(currency -> filteredMap.put(currency.getDate(), currency.getCostRub()));
+                break;
+            }
+        }
 
-        xAxis.setLabel("Месяцы");
+        xAxis.setLabel("Дата");
         XYChart.Series series = new XYChart.Series();
 
         series.setName(pickedCurrency);
 
-        series.getData().add(new XYChart.Data("Jan", 23));
-        series.getData().add(new XYChart.Data("Feb", 14));
-        series.getData().add(new XYChart.Data("Mar", 15));
-        series.getData().add(new XYChart.Data("Apr", 24));
-        series.getData().add(new XYChart.Data("May", 34));
-        series.getData().add(new XYChart.Data("Jun", 36));
-        series.getData().add(new XYChart.Data("Jul", 22));
-        series.getData().add(new XYChart.Data("Aug", 45));
-        series.getData().add(new XYChart.Data("Sep", 43));
-        series.getData().add(new XYChart.Data("Oct", 17));
-        series.getData().add(new XYChart.Data("Nov", 29));
-        series.getData().add(new XYChart.Data("Dec", 25));
+        filteredMap.forEach((key, value) -> series.getData().add(new XYChart.Data(key, value)));
 
         rateLineChart.getData().add(series);
     }
@@ -184,13 +186,15 @@ public class RateController {
 
         setCurrencyCourses(list);
 
+
+
         var requestForCurrencyToday = serializer.apply(UserHolder.getUser().getId());
         var responseForCurrencyToday =
                 messageSender.sendMessage(CommandType.GET_CURRENCY_COURSE_FOR_TODAY, requestForCurrencyToday);
         var course = deserializerForTodayCourse.apply(responseForCurrencyToday, CurrencyCourseDto.class);
         usdToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostUsd()));
         eurToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostEur()));
-        rubToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostRub() * 100));
+        rubToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostRub()));
     }
 
 }
