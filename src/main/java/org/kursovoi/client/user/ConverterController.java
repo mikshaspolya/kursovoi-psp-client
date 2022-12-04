@@ -85,12 +85,15 @@ public class ConverterController {
         switch(currency) {
             case "USD" : {
                 result = currencyCourseForToday.getCostUsd() * Double.parseDouble(sumTextField.getText());
+                break;
             }
             case "EUR" : {
                 result = currencyCourseForToday.getCostEur() * Double.parseDouble(sumTextField.getText());
+                break;
             }
             case "RUB" : {
                 result = currencyCourseForToday.getCostRub() * Double.parseDouble(sumTextField.getText());
+                break;
             }
             default: result = 0;
         }

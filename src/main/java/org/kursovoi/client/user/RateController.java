@@ -51,6 +51,8 @@ public class RateController {
     private RequestSerializer<CreateLoanOrderDto> serializerForLoanOrders;
     @Autowired
     private ResponseDeserializer<String> deserializer;
+    @Autowired
+    private ResponseDeserializer<CurrencyCourseDto> deserializerForTodayCourse;
 
     private List<CurrencyCourseDto> currencyCourses;
 
@@ -181,6 +183,14 @@ public class RateController {
         List<CurrencyCourseDto> list = objectMapper.readValue(response, new TypeReference<>() {});
 
         setCurrencyCourses(list);
+
+        var requestForCurrencyToday = serializer.apply(UserHolder.getUser().getId());
+        var responseForCurrencyToday =
+                messageSender.sendMessage(CommandType.GET_CURRENCY_COURSE_FOR_TODAY, requestForCurrencyToday);
+        var course = deserializerForTodayCourse.apply(responseForCurrencyToday, CurrencyCourseDto.class);
+        usdToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostUsd()));
+        eurToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostEur()));
+        rubToBynLabel.setText(Double.toString(course == null ? 0 : course.getCostRub() * 100));
     }
 
 }
